@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 import pygame as pg
 
 
@@ -12,6 +13,21 @@ DELTA={
     pg.K_RIGHT: (+5,0),
 }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+def gameover(screen:pg.Surface) -> None:  # Game Over画面
+    go = pg.Surface((WIDTH, HEIGHT))
+    pg.draw.rect(go,(0,0,0),(0,0,0,0))  # 1 空のSurface
+    go.set_alpha(180)  # 2 Surfaceの透明度
+    font = pg.font.Font(None, 120)  # 3 文字の表示
+    text = font.render("Game Over", True, (255, 255, 255))
+    go.blit(text, [300,HEIGHT/2])
+    kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)  # 4 画像の表示
+    go.blit(kk_img, [800,HEIGHT/2])
+    go.blit(kk_img,[200,HEIGHT/2])
+    screen.blit(go, (0, 0)) # 5 Surfaceをscreenに表示
+    pg.display.update() # 6 5秒間表示
+    time.sleep(5)
 
 
 def check_bound(rct:pg.Rect) -> tuple[bool, bool]:
@@ -48,6 +64,11 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+            
+        if kk_rct.colliderect(bb_rct):  # こうかとんと爆弾が衝突したら
+            gameover(screen)
+            return 
+        
         screen.blit(bg_img, [0, 0]) 
 
         key_lst = pg.key.get_pressed()
