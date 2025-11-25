@@ -18,14 +18,19 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 def gameover(screen:pg.Surface) -> None:  # Game Over画面
     go = pg.Surface((WIDTH, HEIGHT))
     pg.draw.rect(go,(0,0,0),(0,0,0,0))  # 1 空のSurface
+
     go.set_alpha(180)  # 2 Surfaceの透明度
+
     font = pg.font.Font(None, 120)  # 3 文字の表示
     text = font.render("Game Over", True, (255, 255, 255))
     go.blit(text, [300,HEIGHT/2])
+
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)  # 4 画像の表示
     go.blit(kk_img, [800,HEIGHT/2])
     go.blit(kk_img,[200,HEIGHT/2])
+
     screen.blit(go, (0, 0)) # 5 Surfaceをscreenに表示
+
     pg.display.update() # 6 5秒間表示
     time.sleep(5)
 
@@ -66,7 +71,7 @@ def main():
                 return
             
         if kk_rct.colliderect(bb_rct):  # こうかとんと爆弾が衝突したら
-            gameover(screen)
+            gameover(screen)  # 関数呼び出し
             return 
         
         screen.blit(bg_img, [0, 0]) 
