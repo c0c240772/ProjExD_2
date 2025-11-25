@@ -16,6 +16,11 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 def gameover(screen:pg.Surface) -> None:  # Game Over画面
+    """
+    引数：screen 描画先
+    説明：Game Over 画面を5秒表示する。
+    文字とこうかとんをGame Over画面に表示させる
+    """
     go = pg.Surface((WIDTH, HEIGHT))
     pg.draw.rect(go,(0,0,0),(0,0,0,0))  # 1 空のSurface
 
